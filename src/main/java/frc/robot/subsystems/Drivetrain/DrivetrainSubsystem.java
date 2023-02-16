@@ -7,8 +7,8 @@ package frc.robot.subsystems.Drivetrain;
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive.WheelSpeeds;
+import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-
 import frc.robot.Constants.RobotMap;
 
 import com.revrobotics.CANSparkMax;
@@ -19,17 +19,25 @@ import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 public class DrivetrainSubsystem extends SubsystemBase {
 
   private CANSparkMax motorRF, motorRR, motorLF, motorLR;
+  private MotorControllerGroup leftDrive, rightDrive;
+  //private DifferentialDrive chassisDrive;
   private SlewRateLimiter throttleRateLimiter, autonThrotLimiter;
 
   private static DrivetrainSubsystem instance;
 
-  private DrivetrainSubsystem() {
-    motorRF = new CANSparkMax(RobotMap.RIGHT_FRONT_MOTOR_ID, MotorType.kBrushless);
-    motorRR = new CANSparkMax(RobotMap.RIGHT_REAR_MOTOR_ID, MotorType.kBrushless);
-    motorLF = new CANSparkMax(RobotMap.LEFT_FRONT_MOTOR_ID, MotorType.kBrushless);
-    motorLR = new CANSparkMax(RobotMap.LEFT_REAR_MOTOR_ID, MotorType.kBrushless);
-    motorRF.setInverted(true);
-    motorRR.setInverted(true);
+
+ private DrivetrainSubsystem() {
+  motorRF = new CANSparkMax(RobotMap.RIGHT_FRONT_MOTOR_ID, MotorType.kBrushless);
+  motorRR = new CANSparkMax(RobotMap.RIGHT_REAR_MOTOR_ID, MotorType.kBrushless);
+  motorLF = new CANSparkMax(RobotMap.LEFT_FRONT_MOTOR_ID, MotorType.kBrushless);
+  motorLR = new CANSparkMax(RobotMap.LEFT_REAR_MOTOR_ID, MotorType.kBrushless);
+  motorRF.setInverted(true);
+  motorRR.setInverted(true);
+
+  rightDrive = new MotorControllerGroup(motorRF, motorRR);
+  leftDrive = new MotorControllerGroup(motorLF, motorLR);
+
+  //chassisDrive = new DifferentialDrive(leftDrive, rightDrive);
 
     throttleRateLimiter = new SlewRateLimiter(1.8);
     autonThrotLimiter = new SlewRateLimiter(1.5);
@@ -44,35 +52,37 @@ public class DrivetrainSubsystem extends SubsystemBase {
   }
 
   public void setArcade(double throttle, double rotation) {
+    WheelSpeeds speeds = DifferentialDrive.arcadeDriveIK(throttleRateLimiter.calculate(throttle), rotation, true);
+    double leftPower = speeds.left;
+    double rightPower = speeds.right;
     
-    double limitedThrottle = throttleRateLimiter.calculate(throttle);
+    //double limitedThrottle = throttleRateLimiter.calculate(throttle);
 
-    if (limitedThrottle > .02) {  limitedThrottle = limitedThrottle * -limitedThrottle; }
+    //limitedThrottle = setDeadband(limitedThrottle, .02, 1);
+   /*if (limitedThrottle > .02) {  limitedThrottle = limitedThrottle * -limitedThrottle; }
     else if (limitedThrottle < -.02) { limitedThrottle = limitedThrottle * limitedThrottle;  }
-    else {  limitedThrottle = 0;  }
+    else {  limitedThrottle = 0;  }*/
 
-    if (rotation > .02) {  rotation = rotation * rotation * .25;  }
+
+    /*if (rotation > .02) {  rotation = rotation * rotation * .25;  }
     else if (rotation < - .02) {  rotation = rotation * rotation * -.25;  }
-    else {  rotation = 0; }
+    else {  rotation = 0; }*/
     
-    double leftPower = limitedThrottle + rotation;
-    double rightPower = limitedThrottle - rotation;
+    //double leftPower = limitedThrottle + rotation;
+    //double rightPower = limitedThrottle - rotation;
 
     setPower(leftPower, rightPower);
   }
   
-  public void setCurvature(double throttle, double rotation, boolean rotationInPlace) {
+ /*public void setCurvature(double throttle, double rotation, boolean rotationInPlace) {
     WheelSpeeds speeds = DifferentialDrive.curvatureDriveIK(throttle, -rotation, rotationInPlace);
     double leftPower = speeds.left;
     double rightPower = speeds.right;
     setPower(leftPower, rightPower);
-  }
-
+  }*/
   public void setPower(double leftPower, double rightPower) {
-    motorRF.set(rightPower);
-    motorRR.set(rightPower);
-    motorLF.set(leftPower);
-    motorLR.set(leftPower);
+    rightDrive.set(rightPower);
+    leftDrive.set(leftPower);
   }
 
   public void setAutonPower(double inThrottle, double inRotation) {
