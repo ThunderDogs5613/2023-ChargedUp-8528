@@ -52,7 +52,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
   }
 
   public void setArcade(double throttle, double rotation) {
-    WheelSpeeds speeds = DifferentialDrive.arcadeDriveIK(throttleRateLimiter.calculate(throttle), rotation, true);
+    WheelSpeeds speeds = DifferentialDrive.arcadeDriveIK(throttleRateLimiter.calculate(throttle ), rotation, true);
     double leftPower = speeds.left;
     double rightPower = speeds.right;
     
