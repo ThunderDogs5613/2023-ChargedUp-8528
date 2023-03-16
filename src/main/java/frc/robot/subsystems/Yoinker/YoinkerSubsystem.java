@@ -22,4 +22,7 @@ public class YoinkerSubsystem extends SubsystemBase {
       return instance;
     }
     
+    public void setPower(double power) {
+      motorYY.set(power);
+    }
 }
