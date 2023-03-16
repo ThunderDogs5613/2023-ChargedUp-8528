@@ -1,20 +1,20 @@
 package frc.robot.Constants;
 
 import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj2.command.button.CommandGenericHID;
 
 public class ControllerMap {
 
-    private static Joystick driveStick;
+    public static CommandGenericHID driveStick = new CommandGenericHID(0);
 
-    public static Joystick getDriveStick(){
+    public static CommandGenericHID getDriveStick(){
         if (driveStick == null){
-            driveStick = new Joystick(RobotMap.DRIVE_STICK_ID);
+            driveStick = new CommandGenericHID(0);
         }
         return driveStick;
     }
-    
 
-    public static class GenericHID{
+    public static class DriveController{
         public static class Axis{
             public static final int STICK_X = 0;
             public static final int STICK_Y = 1;
@@ -30,6 +30,13 @@ public class ControllerMap {
             public static final int B5 = 5;
             public static final int B6 = 6;
             public static final int PINKY = 7;
+        }
+
+        public static class POVButton{
+            public static final int UP = 0;
+            public static final int RIGHT = 90;
+            public static final int DOWN = 180;
+            public static final int LEFT = 270;
         }
     }   
 }
