@@ -41,7 +41,13 @@ public class BigStickSubsystem extends SubsystemBase {
     public void setPower(double power) {
       motorBS.set(power);
     }
-//
+
+    public void goPrecision() {
+      /*normVal=(inVal-minIn)/maxIn-minIn
+        outVal=normVal*(maxOut-minOut)+minOut
+      */
+    }
+
     public void useOutput(double output, double setpoint) {
       stickOutput = output;
       //limitedOutput = armLimiter.calculate(armOutput);
