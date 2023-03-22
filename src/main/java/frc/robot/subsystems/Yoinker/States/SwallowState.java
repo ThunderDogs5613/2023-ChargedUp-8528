@@ -13,7 +13,11 @@ public class SwallowState extends CommandBase{
 
     @Override
     public void execute() {
-        yoink.setPower(Constants.YoinkerConstants.YoinkinMaxSpeed*-1);
+        yoink.setPower(Constants.YoinkerConstants.YoinkiMinSpeed);
     }
+
+    public void end(boolean interrupted) {
+        yoink.setPower(0);
+      }
 }
 

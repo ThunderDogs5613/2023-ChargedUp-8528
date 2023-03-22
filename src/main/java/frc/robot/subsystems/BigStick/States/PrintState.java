@@ -4,7 +4,9 @@
 
 package frc.robot.subsystems.BigStick.States;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
+import frc.robot.Constants.ControllerMap;
 import frc.robot.subsystems.BigStick.BigStickSubsystem;
 
 public class PrintState extends CommandBase {
@@ -27,7 +29,10 @@ public class PrintState extends CommandBase {
   @Override
   public void execute() {
     position = BigStickSubsystem.getInstance().getBigStickPos();
-    System.out.println(position);
+    //System.out.println(position);
+    
+  
+    SmartDashboard.putNumber("stickPosition", BigStickSubsystem.getInstance().getPrecisionPos(ControllerMap.getDriveStick().getRawAxis(ControllerMap.DriveController.Axis.STICK_THROT)));
   }
 
 

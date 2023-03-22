@@ -18,8 +18,13 @@ public class BigStickSubsystem extends SubsystemBase {
     private SlewRateLimiter stickLimiter;
     private double stickOutput;
     private double limitedOutput;
+    
     private ArmFeedforward feedForward = new ArmFeedforward(0,0,0);
     private PIDController stickPID = new PIDController(Constants.BigStickConstants.kP, Constants.BigStickConstants.kI, Constants.BigStickConstants.kD);
+    private double minIn = Constants.BigStickConstants.minThrotIn;
+    private double maxIn = Constants.BigStickConstants.maxThrotIn;
+    private double minOut = Constants.BigStickConstants.minEncoderOut;
+    private double maxOut = Constants.BigStickConstants.maxEncoderOut;
 
     private static BigStickSubsystem instance;
 
@@ -42,10 +47,15 @@ public class BigStickSubsystem extends SubsystemBase {
       motorBS.set(power);
     }
 
-    public void goPrecision() {
+    public double getPrecisionPos(double actualInVal) {
       /*normVal=(inVal-minIn)/maxIn-minIn
         outVal=normVal*(maxOut-minOut)+minOut
       */
+      double inVal = actualInVal*100;
+      double normVal = (inVal-minIn)/(maxIn-minIn);
+      double outVal = (normVal*(maxOut-minOut))+minOut;
+      double actualOutVal = outVal*-1;
+      return actualOutVal;
     }
 
     public void useOutput(double output, double setpoint) {

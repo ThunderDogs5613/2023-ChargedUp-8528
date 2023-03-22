@@ -15,4 +15,8 @@ public class SpitState extends CommandBase{
     public void execute() {
         yoink.setPower(Constants.YoinkerConstants.YoinkinMaxSpeed);
     }
+
+    public void end(boolean interrupted) {
+        yoink.setPower(0);
+    }
 }

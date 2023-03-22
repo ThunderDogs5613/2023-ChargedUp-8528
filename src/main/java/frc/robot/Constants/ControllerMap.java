@@ -29,7 +29,9 @@ public class ControllerMap {
             public static final int B4 = 4;
             public static final int B5 = 5;
             public static final int B6 = 6;
-            public static final int PINKY = 7;
+            public static final int B7 = 7;
+            public static final int B8 = 8;
+            public static final int B9 = 9;
         }
 
         public static class POVButton{
