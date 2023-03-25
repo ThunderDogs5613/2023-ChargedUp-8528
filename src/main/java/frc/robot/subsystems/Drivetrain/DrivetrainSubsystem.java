@@ -5,12 +5,14 @@
 package frc.robot.subsystems.Drivetrain;
 
 import edu.wpi.first.math.filter.SlewRateLimiter;
+import edu.wpi.first.wpilibj.SPI.Port;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive;
 import edu.wpi.first.wpilibj.drive.DifferentialDrive.WheelSpeeds;
 import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants.RobotMap;
 
+import com.kauailabs.navx.frc.AHRS;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
@@ -25,7 +27,9 @@ public class DrivetrainSubsystem extends SubsystemBase {
 
   private static DrivetrainSubsystem instance;
 
+  public AHRS ahrs = new AHRS(Port.kMXP);
 
+  
  private DrivetrainSubsystem() {
   motorRF = new CANSparkMax(RobotMap.RIGHT_FRONT_MOTOR_ID, MotorType.kBrushless);
   motorRR = new CANSparkMax(RobotMap.RIGHT_REAR_MOTOR_ID, MotorType.kBrushless);
@@ -42,6 +46,8 @@ public class DrivetrainSubsystem extends SubsystemBase {
     throttleRateLimiter = new SlewRateLimiter(1.1);
     autonThrotLimiter = new SlewRateLimiter(1.5);
     new SlewRateLimiter(2);
+
+    ahrs.calibrate();
   }
 
   public static synchronized DrivetrainSubsystem getInstance() {
