@@ -43,7 +43,7 @@ public class DrivetrainSubsystem extends SubsystemBase {
 
   //chassisDrive = new DifferentialDrive(leftDrive, rightDrive);
 
-    throttleRateLimiter = new SlewRateLimiter(2);
+    throttleRateLimiter = new SlewRateLimiter(5);
     autonThrotLimiter = new SlewRateLimiter(1.5);
     new SlewRateLimiter(2);
 
