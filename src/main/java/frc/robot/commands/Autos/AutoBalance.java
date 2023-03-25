@@ -47,13 +47,13 @@ public class AutoBalance extends CommandBase {
         if ((mDrivetrain.ahrs.getRoll() < 6.75) && (mDrivetrain.ahrs.getRoll() > -6.75)) {
             mDrivetrain.setArcade(0, 0);
         } else if (mDrivetrain.ahrs.getRoll() > 6.75) {
-            mDrivetrain.setArcade(speedLimiter.calculate(-0.22*speedK), 0);
+            mDrivetrain.setArcade(speedLimiter.calculate(0.22*speedK), 0);
             if (isTriggered) {
                 isTriggered = false;
                 speedK /= 1.8;
             }
         } else {
-            mDrivetrain.setArcade(speedLimiter.calculate(0.22*speedK), 0);
+            mDrivetrain.setArcade(speedLimiter.calculate(-0.22*speedK), 0);
             if (isTriggered) {
                 isTriggered = false;
                 speedK /= 1.8;
