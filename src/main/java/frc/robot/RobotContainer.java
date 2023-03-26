@@ -6,15 +6,19 @@ package frc.robot;
 
 import frc.robot.Constants.ControllerMap;
 import frc.robot.Constants.Constants;
-import frc.robot.Constants.Constants.BigStickConstants.BigStickPos;
+
 import frc.robot.subsystems.BigStick.BigStickSubsystem;
-import frc.robot.subsystems.BigStick.States.PositionState;
-import frc.robot.subsystems.BigStick.States.PrecisionControl;
-import frc.robot.subsystems.BigStick.States.PrintState;
+import frc.robot.subsystems.BigStick.States.*;
+import frc.robot.Constants.Constants.BigStickConstants.BigStickPos;
+
+import frc.robot.Constants.Constants.ScoopConstants.ScoopPos;
+
+import frc.robot.subsystems.Scoop.*;
+import frc.robot.subsystems.Scoop.States.*;
 import frc.robot.subsystems.Drivetrain.*;
 import frc.robot.subsystems.Drivetrain.States.OpenLoopState;
-import frc.robot.subsystems.LilStick.LilStickSubsystem;
-import frc.robot.subsystems.LilStick.States.LilPrintState;
+import frc.robot.subsystems.Scoop.ScoopSubsystem;
+import frc.robot.subsystems.Scoop.States.ScoopPrintState;
 import frc.robot.subsystems.Yoinker.YoinkerSubsystem;
 import frc.robot.subsystems.Yoinker.States.IdleState;
 import frc.robot.subsystems.Yoinker.States.SpitState;
@@ -40,7 +44,7 @@ public class RobotContainer {
   DrivetrainSubsystem drive;
   YoinkerSubsystem yoink;
   BigStickSubsystem bigStick;
-  LilStickSubsystem lilStick;
+  ScoopSubsystem lilStick;
   CommandGenericHID driveStick = ControllerMap.getDriveStick();
 
   public RobotContainer() {
@@ -53,14 +57,14 @@ public class RobotContainer {
   private void setAllDefaultCommands() {
     CommandScheduler.getInstance().setDefaultCommand(drive, new OpenLoopState());
     CommandScheduler.getInstance().setDefaultCommand(bigStick, new PrintState());
-    CommandScheduler.getInstance().setDefaultCommand(lilStick, new LilPrintState());
+    CommandScheduler.getInstance().setDefaultCommand(lilStick, new ScoopPrintState());
     CommandScheduler.getInstance().setDefaultCommand(yoink, new IdleState());
   }
 
   private void initializeSubsystems() {
     drive = DrivetrainSubsystem.getInstance();
     bigStick = BigStickSubsystem.getInstance();
-    lilStick = LilStickSubsystem.getInstance();
+    lilStick = ScoopSubsystem.getInstance();
     yoink = YoinkerSubsystem.getInstance();
   }
 
@@ -68,25 +72,25 @@ public class RobotContainer {
     Trigger swallow = driveStick.button(ControllerMap.DriveController.Button.TRIGGER).onTrue(
       new SwallowState().repeatedly()
     );
-    Trigger spit = driveStick.button(ControllerMap.DriveController.Button.B3).onTrue(
-      new SpitState().repeatedly()
+
+    Trigger scoopUp = driveStick.button(ControllerMap.DriveController.Button.B3).onTrue(
+      new ScoopPositionState(ScoopPos.UP)
     );
-    Trigger trig3 = driveStick.button(ControllerMap.DriveController.Button.B8).onTrue(
-      new PositionState(BigStickPos.SHELF_YOINK)
+    Trigger scoopDown = driveStick.button(ControllerMap.DriveController.Button.B4).onTrue(
+      new ScoopPositionState(ScoopPos.START)
+    );
+
+    Trigger armDown = driveStick.button(ControllerMap.DriveController.Button.B7).onTrue(
+      new PositionState(BigStickPos.DOWN)
+    ); 
+    Trigger armStow = driveStick.button(ControllerMap.DriveController.Button.B8).onTrue(
+      new PositionState(BigStickPos.STOW)
       //new PrintState().repeatedly()
     );
-    Trigger trig4 = driveStick.button(ControllerMap.DriveController.Button.B7).onTrue(
-      new PositionState(BigStickPos.FLOOR_YOINK)
+    Trigger armUp = driveStick.button(ControllerMap.DriveController.Button.B9).toggleOnTrue(
+      new PositionState(BigStickPos.UP)
     );
-    Trigger trig5 = driveStick.button(ControllerMap.DriveController.Button.B5).onTrue(
-      new PositionState(BigStickPos.STARTUP)
-    );
-    Trigger trig6 = driveStick.button(ControllerMap.DriveController.Button.B9).toggleOnTrue(
-      new PrecisionControl().repeatedly()
-    );
-    Trigger trig7 = driveStick.button(ControllerMap.DriveController.Button.B4).onTrue(
-      new IdleState().repeatedly()
-    );
+    
   }
 
   public Command getAutonomousCommand() {

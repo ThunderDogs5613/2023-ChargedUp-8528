@@ -1,4 +1,4 @@
-package frc.robot.subsystems.LilStick;
+package frc.robot.subsystems.Scoop;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
@@ -12,7 +12,7 @@ import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
 
-public class LilStickSubsystem extends SubsystemBase{
+public class ScoopSubsystem extends SubsystemBase{
 
     private boolean isUsingPID = false;
     private CANSparkMax motorLS;
@@ -20,25 +20,25 @@ public class LilStickSubsystem extends SubsystemBase{
     private double stickOutput;
 
     private ArmFeedforward feedForward = new ArmFeedforward(0,0,0);
-    private PIDController lilStickPID = new PIDController(Constants.BigStickConstants.kP, Constants.BigStickConstants.kI, Constants.BigStickConstants.kD);
-    private double minIn = Constants.BigStickConstants.minThrotIn;
-    private double maxIn = Constants.BigStickConstants.maxThrotIn;
-    private double minOut = Constants.BigStickConstants.minEncoderOut;
-    private double maxOut = Constants.BigStickConstants.maxEncoderOut;
+    private PIDController scoopPID = new PIDController(Constants.ScoopConstants.kP, Constants.ScoopConstants.kI, Constants.ScoopConstants.kD);
+    private double minIn = Constants.ScoopConstants.minThrotIn;
+    private double maxIn = Constants.ScoopConstants.maxThrotIn;
+    private double minOut = Constants.ScoopConstants.minEncoderOut;
+    private double maxOut = Constants.ScoopConstants.maxEncoderOut;
 
 
-    private static LilStickSubsystem instance;
+    private static ScoopSubsystem instance;
 
-    private LilStickSubsystem() {
+    private ScoopSubsystem() {
     
 //
       motorLS = new CANSparkMax(RobotMap.LIL_STICK_MOTOR_ID, MotorType.kBrushless);
       encoderLS = motorLS.getEncoder();
     }
 
-    public static synchronized LilStickSubsystem getInstance() {
+    public static synchronized ScoopSubsystem getInstance() {
         if(instance == null){
-          instance = new LilStickSubsystem();
+          instance = new ScoopSubsystem();
         }
         return instance;
     }
@@ -65,10 +65,10 @@ public class LilStickSubsystem extends SubsystemBase{
     }
 
     protected double getMeasurement() {
-      return getBigStickPos();
+      return getScoopPos();
     } 
 
-    public double getBigStickPos() {
+    public double getScoopPos() {
       return encoderLS.getPosition();
     }
     
@@ -80,13 +80,13 @@ public class LilStickSubsystem extends SubsystemBase{
       isUsingPID = false;
     }
 
-    public void setStickSetpoint(double setpoint) {
-      lilStickPID.setSetpoint(setpoint);
+    public void setScoopSetpoint(double setpoint) {
+      scoopPID.setSetpoint(setpoint);
     }
     
     public void periodic() {
       if(isUsingPID) {
-        setPower(lilStickPID.calculate(getMeasurement()));
+        setPower(scoopPID.calculate(getMeasurement()));
       }
     }
 }

@@ -1,16 +1,16 @@
-package frc.robot.subsystems.LilStick.States;
+package frc.robot.subsystems.Scoop.States;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.ControllerMap;
-import frc.robot.subsystems.LilStick.LilStickSubsystem;
+import frc.robot.subsystems.Scoop.ScoopSubsystem;
 
-public class LilPrintState extends CommandBase {
+public class ScoopPrintState extends CommandBase {
 
   public static double position;
 
-  public LilPrintState() {
-    addRequirements(LilStickSubsystem.getInstance());
+  public ScoopPrintState() {
+    addRequirements(ScoopSubsystem.getInstance());
 
   }
 
@@ -24,11 +24,11 @@ public class LilPrintState extends CommandBase {
 
   @Override
   public void execute() {
-    position = LilStickSubsystem.getInstance().getBigStickPos();
+    position = ScoopSubsystem.getInstance().getScoopPos();
     //System.out.println(position);
     
   
-    SmartDashboard.putNumber("stickPosition", LilStickSubsystem.getInstance().getPrecisionPos(ControllerMap.getDriveStick().getRawAxis(ControllerMap.DriveController.Axis.STICK_THROT)));
+    SmartDashboard.putNumber("stickPosition", ScoopSubsystem.getInstance().getPrecisionPos(ControllerMap.getDriveStick().getRawAxis(ControllerMap.DriveController.Axis.STICK_THROT)));
   }
 
 
