@@ -14,6 +14,7 @@ import frc.robot.subsystems.BigStick.States.PrintState;
 import frc.robot.subsystems.Drivetrain.*;
 import frc.robot.subsystems.Drivetrain.States.OpenLoopState;
 import frc.robot.subsystems.LilStick.LilStickSubsystem;
+import frc.robot.subsystems.LilStick.States.LilPrintState;
 import frc.robot.subsystems.Yoinker.YoinkerSubsystem;
 import frc.robot.subsystems.Yoinker.States.IdleState;
 import frc.robot.subsystems.Yoinker.States.SpitState;
@@ -52,7 +53,7 @@ public class RobotContainer {
   private void setAllDefaultCommands() {
     CommandScheduler.getInstance().setDefaultCommand(drive, new OpenLoopState());
     CommandScheduler.getInstance().setDefaultCommand(bigStick, new PrintState());
-    CommandScheduler.getInstance().setDefaultCommand(lilStick, new PrintState());
+    CommandScheduler.getInstance().setDefaultCommand(lilStick, new LilPrintState());
     CommandScheduler.getInstance().setDefaultCommand(yoink, new IdleState());
   }
 

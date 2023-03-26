@@ -5,11 +5,11 @@ import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.Constants.ControllerMap;
 import frc.robot.subsystems.LilStick.LilStickSubsystem;
 
-public class PrintState extends CommandBase {
+public class LilPrintState extends CommandBase {
 
   public static double position;
 
-  public PrintState() {
+  public LilPrintState() {
     addRequirements(LilStickSubsystem.getInstance());
 
   }
