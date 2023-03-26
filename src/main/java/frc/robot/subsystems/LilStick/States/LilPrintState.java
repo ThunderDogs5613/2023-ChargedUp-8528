@@ -18,14 +18,14 @@ public class LilPrintState extends CommandBase {
   @Override
   public void initialize() {
     //ArmSubsystem.getInstance().setPower(0);
-    System.out.println("initialize print Statementy");
+    System.out.println("initialize Lil print Statement");
   }
 
 
   @Override
   public void execute() {
     position = LilStickSubsystem.getInstance().getBigStickPos();
-    //System.out.println(position);
+    System.out.println(position);
     
   
     SmartDashboard.putNumber("stickPosition", LilStickSubsystem.getInstance().getPrecisionPos(ControllerMap.getDriveStick().getRawAxis(ControllerMap.DriveController.Axis.STICK_THROT)));
