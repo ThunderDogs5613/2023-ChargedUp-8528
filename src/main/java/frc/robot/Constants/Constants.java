@@ -11,9 +11,9 @@ public final class Constants {
     }
 
     public static final class BigStickConstants {
-        public static final double kP = 0.01;
+        public static final double kP = 0.03;
         public static final double kI = 0.00;
-        public static final double kD = 0.00;
+        public static final double kD = 0.005;
 
         public static final double bigStickPrecisionSpeed = 0.10;
         public static final double bigStickPosRaiseSpeed = 0.20;
@@ -35,9 +35,9 @@ public final class Constants {
     }
 
     public static final class ScoopConstants {
-        public static final double kP = 0.01;
+        public static final double kP = 0.03;
         public static final double kI = 0.00;
-        public static final double kD = 0.00;
+        public static final double kD = 0.005;
 
         public static final double bigStickPrecisionSpeed = 0.10;
         public static final double bigStickPosRaiseSpeed = 0.20;
