@@ -29,7 +29,7 @@ public class PrintState extends CommandBase {
   @Override
   public void execute() {
     position = BigStickSubsystem.getInstance().getBigStickPos();
-    //System.out.println(position);
+    System.out.println(position);
     
   
     SmartDashboard.putNumber("stickPosition", BigStickSubsystem.getInstance().getPrecisionPos(ControllerMap.getDriveStick().getRawAxis(ControllerMap.DriveController.Axis.STICK_THROT)));
