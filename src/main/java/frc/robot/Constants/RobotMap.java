@@ -11,5 +11,7 @@ public class RobotMap {
     public static final int BIG_STICK_MOTOR_ID = 05;
     public static final int BIG_STICK_ENCODER_ID = 00;
 
-    public static final int YOINK_MOTOR_ID = 06;
+    public static final int LIL_STICK_MOTOR_ID = 06;
+
+    public static final int YOINK_MOTOR_ID = 07;
 }

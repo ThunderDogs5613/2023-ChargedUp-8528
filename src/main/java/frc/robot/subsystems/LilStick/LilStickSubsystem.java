@@ -1,4 +1,4 @@
-package frc.robot.subsystems.BigStick;
+package frc.robot.subsystems.LilStick;
 
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.RelativeEncoder;
@@ -11,40 +11,40 @@ import edu.wpi.first.math.controller.PIDController;
 import edu.wpi.first.math.filter.SlewRateLimiter;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 
-public class BigStickSubsystem extends SubsystemBase {
-    private boolean isUsingPID = false;//anti-error comment
-    private CANSparkMax motorBS;
-    private RelativeEncoder encoderBS;
-    private SlewRateLimiter stickLimiter;
+
+public class LilStickSubsystem extends SubsystemBase{
+
+    private boolean isUsingPID = false;
+    private CANSparkMax motorLS;
+    private RelativeEncoder encoderLS;
     private double stickOutput;
-    private double limitedOutput;
-    
+
     private ArmFeedforward feedForward = new ArmFeedforward(0,0,0);
-    private PIDController bigStickPID = new PIDController(Constants.BigStickConstants.kP, Constants.BigStickConstants.kI, Constants.BigStickConstants.kD);
+    private PIDController lilStickPID = new PIDController(Constants.BigStickConstants.kP, Constants.BigStickConstants.kI, Constants.BigStickConstants.kD);
     private double minIn = Constants.BigStickConstants.minThrotIn;
     private double maxIn = Constants.BigStickConstants.maxThrotIn;
     private double minOut = Constants.BigStickConstants.minEncoderOut;
     private double maxOut = Constants.BigStickConstants.maxEncoderOut;
 
-    private static BigStickSubsystem instance;
 
-    private BigStickSubsystem() {
+    private static LilStickSubsystem instance;
+
+    private LilStickSubsystem() {
     
 //
-      motorBS = new CANSparkMax(RobotMap.BIG_STICK_MOTOR_ID, MotorType.kBrushless);
-      encoderBS = motorBS.getEncoder();
-      stickLimiter = new SlewRateLimiter(1.8);   
+      motorLS = new CANSparkMax(RobotMap.LIL_STICK_MOTOR_ID, MotorType.kBrushless);
+      encoderLS = motorLS.getEncoder();
     }
 
-    public static synchronized BigStickSubsystem getInstance() {
+    public static synchronized LilStickSubsystem getInstance() {
         if(instance == null){
-          instance = new BigStickSubsystem();
+          instance = new LilStickSubsystem();
         }
         return instance;
     }
     
     public void setPower(double power) {
-      motorBS.set(power);
+      motorLS.set(power);
     }
 
     public double getPrecisionPos(double actualInVal) {
@@ -69,7 +69,7 @@ public class BigStickSubsystem extends SubsystemBase {
     } 
 
     public double getBigStickPos() {
-      return encoderBS.getPosition();
+      return encoderLS.getPosition();
     }
     
     public void enable() {
@@ -81,12 +81,12 @@ public class BigStickSubsystem extends SubsystemBase {
     }
 
     public void setStickSetpoint(double setpoint) {
-      bigStickPID.setSetpoint(setpoint);
+      lilStickPID.setSetpoint(setpoint);
     }
     
     public void periodic() {
       if(isUsingPID) {
-        setPower(bigStickPID.calculate(getMeasurement()));
+        setPower(lilStickPID.calculate(getMeasurement()));
       }
     }
 }

@@ -13,6 +13,7 @@ import frc.robot.subsystems.BigStick.States.PrecisionControl;
 import frc.robot.subsystems.BigStick.States.PrintState;
 import frc.robot.subsystems.Drivetrain.*;
 import frc.robot.subsystems.Drivetrain.States.OpenLoopState;
+import frc.robot.subsystems.LilStick.LilStickSubsystem;
 import frc.robot.subsystems.Yoinker.YoinkerSubsystem;
 import frc.robot.subsystems.Yoinker.States.IdleState;
 import frc.robot.subsystems.Yoinker.States.SpitState;
@@ -37,26 +38,29 @@ public class RobotContainer {
 
   DrivetrainSubsystem drive;
   YoinkerSubsystem yoink;
-  BigStickSubsystem stick;
+  BigStickSubsystem bigStick;
+  LilStickSubsystem lilStick;
   CommandGenericHID driveStick = ControllerMap.getDriveStick();
 
   public RobotContainer() {
     initializeSubsystems();
     configureBindings();
     setAllDefaultCommands();
-    SmartDashboard.putData(stick);
+    SmartDashboard.putData(bigStick);
   }
 
   private void setAllDefaultCommands() {
     CommandScheduler.getInstance().setDefaultCommand(drive, new OpenLoopState());
-    CommandScheduler.getInstance().setDefaultCommand(stick, new PrintState());
+    CommandScheduler.getInstance().setDefaultCommand(bigStick, new PrintState());
+    CommandScheduler.getInstance().setDefaultCommand(lilStick, new PrintState());
     CommandScheduler.getInstance().setDefaultCommand(yoink, new IdleState());
   }
 
   private void initializeSubsystems() {
     drive = DrivetrainSubsystem.getInstance();
+    bigStick = BigStickSubsystem.getInstance();
+    lilStick = LilStickSubsystem.getInstance();
     yoink = YoinkerSubsystem.getInstance();
-    stick = BigStickSubsystem.getInstance();
   }
 
   private void configureBindings() {
