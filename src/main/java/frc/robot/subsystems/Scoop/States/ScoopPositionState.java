@@ -33,8 +33,18 @@ public class ScoopPositionState extends CommandBase{
  //         BigStickSubsystem.getInstance().setFeedForward(0.02);
           break;
   
-        case UP :
+          case UP :
           ScoopSubsystem.getInstance().setScoopSetpoint(Constants.ScoopConstants.straightUp);
+//          ArmSubsystem.getInstance().setFeedForward(0.01);
+          break; 
+          
+          case INSIDE :
+          ScoopSubsystem.getInstance().setScoopSetpoint(Constants.ScoopConstants.insideFrame);
+//          ArmSubsystem.getInstance().setFeedForward(0.01);
+          break; 
+          
+          case BACK :
+          ScoopSubsystem.getInstance().setScoopSetpoint(Constants.ScoopConstants.fullBack);
 //          ArmSubsystem.getInstance().setFeedForward(0.01);
           break;  
           

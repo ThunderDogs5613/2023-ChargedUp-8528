@@ -79,6 +79,12 @@ public class RobotContainer {
     Trigger scoopDown = driveStick.button(ControllerMap.DriveController.Button.B4).onTrue(
       new ScoopPositionState(ScoopPos.START)
     );
+    Trigger scoopBack = driveStick.button(ControllerMap.DriveController.Button.B5).onTrue(
+      new ScoopPositionState(ScoopPos.BACK)
+    );
+    Trigger scoopInside = driveStick.button(ControllerMap.DriveController.Button.B6).onTrue(
+      new ScoopPositionState(ScoopPos.INSIDE)
+    );
 
     Trigger armDown = driveStick.button(ControllerMap.DriveController.Button.B7).onTrue(
       new PositionState(BigStickPos.DOWN)
