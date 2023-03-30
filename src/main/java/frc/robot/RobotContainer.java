@@ -93,10 +93,15 @@ public class RobotContainer {
       new PositionState(BigStickPos.STOW)
       //new PrintState().repeatedly()
     );
-    Trigger armUp = driveStick.button(ControllerMap.DriveController.Button.B9).toggleOnTrue(
+    Trigger armUp = driveStick.button(ControllerMap.DriveController.Button.B9).onTrue(
       new PositionState(BigStickPos.UP)
     );
-    
+    Trigger goPrecisionMode = driveStick.button(ControllerMap.DriveController.Button.B10).onTrue(
+      new PrecisionControl().repeatedly()
+    );
+    Trigger holdPrecisionPos = driveStick.button(ControllerMap.DriveController.Button.B10).onFalse(
+      new PositionState(BigStickPos.HOLD)
+    );
   }
 
   public Command getAutonomousCommand() {
